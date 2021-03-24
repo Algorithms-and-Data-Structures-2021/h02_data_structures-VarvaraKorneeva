@@ -12,6 +12,18 @@ void LinkedList::Add(Element e) {
   // Tip 2: есть 2 случая - список пустой и непустой
   // Tip 3: не забудьте обновить поля head и tail
   // напишите свой код здесь ...
+  Node* node = New Node(e, nullptr);
+  if (size_ == 0){
+      assert(head_ == nullptr && tail_ == nulllptr);
+      head_ = node;
+      tail_ = node;
+      size_ += 1;
+  }
+  else{
+      tail_->next = node;
+      tail_ = node;
+  }
+  size_ += 1;
 }
 
 void LinkedList::Insert(int index, Element e) {
@@ -25,6 +37,8 @@ void LinkedList::Insert(int index, Element e) {
   //        (4) все остальное
 
   // напишите свой код здесь ...
+  if (index == 0){
+  }
 }
 
 void LinkedList::Set(int index, Element e) {
@@ -44,12 +58,21 @@ Element LinkedList::Remove(int index) {
 void LinkedList::Clear() {
   // Tip 1: люди в черном (MIB) пришли стереть вам память
   // напишите свой код здесь ...
+  for (DoublyNode *curr_node = back_; curr_node != nullptr; ){
+      DoublyNode* delete_node = curr_node;
+      curr_node = curr_node->next;
+      delete delete_node;
+  }
+  front_ = nullptr;
+  back_ = nullptr;
+  size_ = 0;
 }
 
 Element LinkedList::Get(int index) const {
   internal::check_out_of_range(index, 0, size_);
   // напишите свой код здесь ...
-  return {};
+  Node *node = find_node(index);
+  return node->data;
 }
 
 int LinkedList::IndexOf(Element e) const {
@@ -61,7 +84,13 @@ Node *LinkedList::find_node(int index) const {
   assert(index >= 0 && index < size_);
   // Tip 1: можете сразу обработать случаи поиска начала и конца списка
   // напишите свой код здесь ...
-  return {};
+  assert(index >= 0 && index < size_);
+  if (index == size_ - 1) return tail_;
+  for (Node* current_node = head_; curreny_node != nullptr; curreny_node = curreny_node->next){
+      if (counter == index) return curreny_node;
+      counter += 1;
+  }
+  return nullptr;
 }
 
 // РЕАЛИЗОВАНО
