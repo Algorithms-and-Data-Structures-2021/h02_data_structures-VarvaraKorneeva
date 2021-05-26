@@ -11,8 +11,9 @@ void LinkedList::Add(Element e) {
   // Tip 1: создайте узел в куче со переданным значением
   // Tip 2: есть 2 случая - список пустой и непустой
   // Tip 3: не забудьте обновить поля head и tail
-  // напишите свой код здесь ...
+
   Node* node = New Node(e, nullptr);
+
   if (size_ == 0){
       assert(head_ == nullptr && tail_ == nulllptr);
       head_ = node;
@@ -36,56 +37,99 @@ void LinkedList::Insert(int index, Element e) {
   //        (3) добавляем в конец списка
   //        (4) все остальное
 
-  // напишите свой код здесь ...
-  if (index == 0){
+  Node* node = New Node(e, nullptr);
+
+  if (size_ == 0){
+      head_ = node;
+      tail_ = node;
+      size_ += 1;
   }
+
+  if(index == 0){
+      node->next = head_;
+      head_ = node;
+      size_ += 1;
+  }
+
+  if(index == size_){
+      tail_->next = node;
+      tail_ = node;
+      size_ += 1;
+  }
+
+  Node* curr = head_;
+  for(int i = 0; i < index - 1; i++){
+      curr = curr->next;
+  }
+  Node* curr2 = curr->next;
+  curr->next = node;
+  node->next = curr2;
+  size_ += 1;
 }
 
 void LinkedList::Set(int index, Element e) {
   internal::check_out_of_range(index, 0, size_);
   // Tip 1: используйте функцию find_node(index)
-  // напишите свой код здесь ...
+
+  Node* node = find_node(index);
+  node->data = e;
 }
 
 Element LinkedList::Remove(int index) {
   internal::check_out_of_range(index, 0, size_);
   // Tip 1: рассмотрите случай, когда удаляется элемент в начале списка
   // Tip 2: используйте функцию find_node(index)
-  // напишите свой код здесь ...
-  return {};
+
+  if(index == 0){
+      Element e = head_->data;
+      head_ = head_->next;
+      return e;
+  }
+
+  Node* node = find_node(index);
+  Element e = node->data;
+  node = node->next;
+  return e;
 }
 
 void LinkedList::Clear() {
   // Tip 1: люди в черном (MIB) пришли стереть вам память
-  // напишите свой код здесь ...
-  for (DoublyNode *curr_node = back_; curr_node != nullptr; ){
+
+  for (DoublyNode *curr_node = tail_; curr_node != nullptr; ){
       DoublyNode* delete_node = curr_node;
       curr_node = curr_node->next;
       delete delete_node;
   }
-  front_ = nullptr;
-  back_ = nullptr;
+  head_ = nullptr;
+  tail_ = nullptr;
   size_ = 0;
 }
 
 Element LinkedList::Get(int index) const {
   internal::check_out_of_range(index, 0, size_);
-  // напишите свой код здесь ...
+
   Node *node = find_node(index);
   return node->data;
 }
 
 int LinkedList::IndexOf(Element e) const {
-  // напишите свой код здесь ...
-  return {};
+
+  int index = 0;
+  for (Node* curr = head_; curr != nullptr; curr = curr->next){
+      if(curr->data == e) return index;
+      index += 1;
+  }
+  return -1;
 }
 
 Node *LinkedList::find_node(int index) const {
   assert(index >= 0 && index < size_);
   // Tip 1: можете сразу обработать случаи поиска начала и конца списка
-  // напишите свой код здесь ...
+
   assert(index >= 0 && index < size_);
-  if (index == size_ - 1) return tail_;
+  if (index == 0) return head_;
+  if (index == size_) return tail_;
+  int counter = 0;
   for (Node* current_node = head_; curreny_node != nullptr; curreny_node = curreny_node->next){
       if (counter == index) return curreny_node;
       counter += 1;
