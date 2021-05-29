@@ -21,7 +21,7 @@ ArrayList::ArrayList(int capacity) : capacity_{capacity} {
 
 ArrayList::~ArrayList() {
   // Tip 1: высвободите выделенную память
-  delete data_;
+  delete [] data_;
   data_ = nullptr;
   // Tip 2: не забудьте про логическую целостность объекта (инвариантность)
 }

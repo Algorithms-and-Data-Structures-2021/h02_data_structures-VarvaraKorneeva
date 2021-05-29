@@ -81,14 +81,18 @@ Element LinkedList::Remove(int index) {
   // Tip 2: используйте функцию find_node(index)
 
   if(index == 0){
+      Node *node = head_;
       Element e = head_->data;
       head_ = head_->next;
+      delete node;
       return e;
   }
 
-  Node* node = find_node(index);
+  Node *node = find_node(index);
   Element e = node->data;
-  node = node->next;
+  Node *node2 = find_node(index - 1);
+  node2->next = node->next;
+  delete node;
   return e;
 }
 
